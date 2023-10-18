@@ -1,13 +1,22 @@
 import { ThumbsUp, Trash } from '@phosphor-icons/react';
 import styles from './Comment.module.css';
 import { Avatar } from './Avatar';
+import { useState } from 'react';
 
 export function Comment({ content, deleteComment }) {
 
-  function handleDeleteComment() {
-    console.log('Deletar');
+  const [likeCount, setLikeCount] = useState(0);
 
+  function handleDeleteComment() {
     deleteComment(content);
+  }
+
+  function handleLikeComment() {
+    setLikeCount((state) => {
+      return state + 1;
+    });
+    // Para atualizar o valor de likes, sempre precisamos saber o valor anterior, e a 
+    // melhor forma é desse jeito.
   }
 
   return (
@@ -34,9 +43,9 @@ export function Comment({ content, deleteComment }) {
         </div>
 
         <footer>
-          <button>
+          <button onClick={handleLikeComment} >
             <ThumbsUp />
-            Aplaudir <span> 20 </span>
+            Aplaudir <span>{likeCount}</span>
           </button>
         </footer>
       </div>
